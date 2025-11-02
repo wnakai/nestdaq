@@ -119,6 +119,7 @@ private:
     // send command via redis pub/sub channels
     void RedisPublishDaqCommand(unsigned int connid, const boost::property_tree::ptree& arg);
     void RedisSet(unsigned int connid, const boost::property_tree::ptree& arg);
+    void ExecuteScript(unsigned int connid, const boost::property_tree::ptree& arg);
     void SendStateSummary(const std::map<std::string, ServiceState> &summaryTable);
     void SubscribeToRedisPubSub();
     void Wait(const std::unordered_set<std::string> &services, const std::unordered_set<std::string> &instances, const std::vector<std::string> &waitStateTargets);

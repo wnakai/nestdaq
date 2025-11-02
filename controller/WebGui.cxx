@@ -198,6 +198,11 @@ void WebGui::InitializeFunctionList()
             }
         },
 
+        {   "execute-script", [this](auto id, const auto &arg) {
+                ExecuteScript(id, arg);
+            }
+        },
+
     });
 
 }
@@ -652,6 +657,15 @@ void WebGui::SubscribeToRedisPubSub()
         }
     }
     LOG(error) << MyClass << "::" << __func__ << " exit";
+}
+//_____________________________________________________________________________
+void WebGui::ExecuteScript(unsigned int connid, const boost::property_tree::ptree &arg)
+{
+    const auto& val = arg.get_optional<std::string>("value");
+    if (val) {
+       LOG(info) << connid << " " << val;
+       boost::process::system(val->data(), boost::process::std_out > stdout, boost::process::std_err > stderr, boost::process::std_in < stdin);
+    }
 }
 
 //_____________________________________________________________________________
