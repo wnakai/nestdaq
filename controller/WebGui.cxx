@@ -710,13 +710,11 @@ void WebGui::Wait(const std::vector<std::string> &keys, const std::vector<std::s
         //      LOG(debug) << " states = " << s;
         // }
 
-        for (const auto &w : waitStateTargets) {
-            if (std::all_of(states.begin(), states.end(), [&w](const auto &x) {
-            return x == w;
+        if (std::all_of(states.begin(), states.end(), [&ws = waitStateTargets](const auto &x) {
+            return std::any_of(ws.begin(), ws.end(), [&x](const auto &w){ return x == w; });
         })) {
                 done = true;
                 break;
-            }
         }
         std::this_thread::sleep_for(100ms);
     }

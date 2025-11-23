@@ -1245,13 +1245,11 @@ void daq::service::TopologyConfig::WaitForPeerConnection()
         //      LOG(debug) << " states = " << s;
         // }
 
-        for (const auto &w : topology::WaitDeviceReadyTargets) {
-            if (std::all_of(states.begin(), states.end(), [&w](const auto &x) {
-            return x == w;
+        if (std::all_of(states.begin(), states.end(), [&ws = topology::WaitDeviceReadyTargets](const auto &x) {
+            return std::any_of(ws.begin(), ws.end(), [&x](const auto &w){ return x == w; });
         })) {
                 done = true;
                 break;
-            }
         }
         std::this_thread::sleep_for(100ms);
     }
