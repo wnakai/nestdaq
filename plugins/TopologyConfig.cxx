@@ -1249,7 +1249,6 @@ void daq::service::TopologyConfig::WaitForPeerConnection()
             return std::any_of(ws.begin(), ws.end(), [&x](const auto &w){ return x == w; });
         })) {
                 done = true;
-                break;
         }
         std::this_thread::sleep_for(100ms);
     }
